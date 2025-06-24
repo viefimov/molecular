@@ -1,0 +1,14 @@
+{
+  "app-public": {
+    "port": 3001,
+    "remote": "publicApp"
+  },
+  "app-demo": {
+    "port": 3002,
+    "remote": "demoApp"
+  },
+  "api": {
+    "port": 3000,
+    "remote": "/api"
+  }
+}
