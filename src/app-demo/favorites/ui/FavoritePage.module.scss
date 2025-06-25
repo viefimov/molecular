@@ -1,0 +1,22 @@
+.favoritesPage {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+.favoritesTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222a36;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.emptyFavorites {
+  color: #b2b8c4;
+  text-align: center;
+  padding: 48px 0 32px 0;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  background: #fafbfc;
+  box-shadow: 0 1px 6px rgba(60, 78, 141, 0.03);
+}

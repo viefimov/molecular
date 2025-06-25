@@ -1,17 +1,70 @@
-import { ProductListProps, ProductListView } from '@/app-demo/products/ui/ProductListView.tsx';
 import { useEffect, useState } from 'react';
-import { Product } from '@/app-demo/products/types.ts';
-import { getProducts } from '@/app-demo/products/api/client.api.ts';
+import { Product } from '@/app-demo/products/types';
+import { ProductListProps, ProductListView } from './ProductListView';
+import { getProducts } from '@/app-demo/products/api/client.api';
+import { addToCart } from '../../cart/api/client.api';
+import Cart from '../../cart/ui/Cart.federated.tsx';
+import styles from './ProductList.module.scss';
+import {
+	getFavorites,
+	addToFavorites,
+	removeFromFavorites,
+} from '@/app-demo/favorites/api/client.api';
+import { useNavigate } from 'react-router';
+
+export function ProductList({
+	title = 'List',
+}: Omit<ProductListProps, 'items'>) {
+	const [items, setItems] = useState<Product[]>([]);
+	const [cartOpen, setCartOpen] = useState(false);
+	const [favorites, setFavorites] = useState<string[]>([]);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		getProducts().then(({ items }) => setItems(items));
+		getFavorites().then(({ items }) => setFavorites(items));
+	}, []);
 
 
-export function ProductList({ title = 'List', onClick }: Omit<ProductListProps, "items">) {
-  const [items, setItems] = useState<Product[]>([]);
+	const handleAddToCart = (product: Product) => {
+		if (!addToCart) return;
+		addToCart({ ...product, quantity: 1 })
+			.then(() => console.log(`Added ${product.name} to cart`))
+			.catch(console.error);
+	};
 
-  useEffect(() => {
-    getProducts()
-      .then(({items}) => setItems(items))
-      .catch(console.error);
-  }, []);
+	const handleToggleFavorite = (id: string) => {
+		if (favorites.includes(id)) {
+			removeFromFavorites(id).then(() =>
+				getFavorites().then(({ items }) => setFavorites(items))
+			);
+		} else {
+			addToFavorites(id).then(() =>
+				getFavorites().then(({ items }) => setFavorites(items))
+			);
+		}
+	};
 
-  return <ProductListView title={title} items={items} onClick={onClick} />
+	const openCart = () => setCartOpen(true);
+	const closeCart = () => setCartOpen(false);
+
+	return (
+		<>
+			<button
+				onClick={() => navigate('/favorites')}
+				className={styles.openFavoritesBtn}
+			>
+				⭐ Избранное
+			</button>
+			<ProductListView
+				title={title}
+				items={items}
+				onClick={handleAddToCart}
+				openCart={openCart}
+				onToggleFavorite={handleToggleFavorite}
+				favoriteIds={favorites}
+			/>
+			{cartOpen && <Cart close={closeCart} />}
+		</>
+	);
 }
