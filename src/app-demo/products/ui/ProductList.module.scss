@@ -164,3 +164,19 @@
     background: #f4f6fd;
   }
 }
+.categorySelect {
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 1.08rem;
+  border: 1.5px solid #e2e6f2;
+  outline: none;
+  background: #fff;
+  color: #232b3d;
+  transition: border 0.18s;
+  cursor: pointer;
+
+  &:focus {
+    border: 1.5px solid #1558D6;
+    background: #f4f6fd;
+  }
+}
