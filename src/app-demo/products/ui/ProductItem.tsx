@@ -1,4 +1,3 @@
-// src/app-demo/products/ui/ProductItem.tsx
 
 import { Product } from '@/app-demo/products/types';
 import styles from './ProductList.module.scss';

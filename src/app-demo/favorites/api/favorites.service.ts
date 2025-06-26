@@ -1,4 +1,3 @@
-// src/app-favorites/favorites.service.ts
 import type { Context, ServiceBroker } from 'moleculer';
 
 type FavoriteItem = { id: string };

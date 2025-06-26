@@ -1,4 +1,3 @@
-// src/app-cart/cart/api/cart.service.ts
 import type { Context, ServiceBroker } from 'moleculer';
 import { CartItem } from '../types';
 import { ListResponse } from '@/base/web/types';
