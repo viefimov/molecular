@@ -7,7 +7,7 @@ export default {
   name: "products",
   actions: {
     list: {
-      rest: "GET /:category?",
+      rest: "GET /",
       handler(this: ServiceBroker, ctx: Context<{
         params: ProductListFilter;
       }>): ListResponse<Product> {

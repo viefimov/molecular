@@ -18,6 +18,7 @@ export function ProductList({
 	const [items, setItems] = useState<Product[]>([]);
 	const [cartOpen, setCartOpen] = useState(false);
 	const [favorites, setFavorites] = useState<string[]>([]);
+  const [search, setSearch] = useState('');
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -25,7 +26,11 @@ export function ProductList({
 		getFavorites().then(({ items }) => setFavorites(items));
 	}, []);
 
-
+  const filteredItems = items.filter(
+		(item) =>
+			item.name.toLowerCase().includes(search.toLowerCase()) ||
+			item.category.toLowerCase().includes(search.toLowerCase())
+	);
 	const handleAddToCart = (product: Product) => {
 		if (!addToCart) return;
 		addToCart({ ...product, quantity: 1 })
@@ -50,6 +55,13 @@ export function ProductList({
 
 	return (
 		<>
+			<input
+				type="search"
+				placeholder="Поиск по товарам или категории…"
+				value={search}
+				onChange={(e) => setSearch(e.target.value)}
+				className={styles.searchInput}
+			/>
 			<button
 				onClick={() => navigate('/favorites')}
 				className={styles.openFavoritesBtn}
@@ -58,7 +70,7 @@ export function ProductList({
 			</button>
 			<ProductListView
 				title={title}
-				items={items}
+				items={filteredItems}
 				onClick={handleAddToCart}
 				openCart={openCart}
 				onToggleFavorite={handleToggleFavorite}

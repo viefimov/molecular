@@ -6,4 +6,5 @@ export type Product = {
 
 export type ProductListFilter = {
   category?: string;
+  search?: string;
 }
